@@ -17,9 +17,9 @@ namespace Game.Features.Parallax
         
         private readonly EcsWorldInject _world = default;
         
-        private EcsCustomInject<IAssetProvider> _assetProvider;
+        private readonly EcsCustomInject<IAssetProvider> _assetProvider;
         
-        private EcsCustomInject<GameConfig> _gameConfig;
+        private readonly EcsCustomInject<GameConfig> _gameConfig;
         
         private EcsFilterInject<Inc<LevelComponent>> _filter;
         
@@ -49,8 +49,11 @@ namespace Game.Features.Parallax
 
             parallaxGameObject.transform.position = new Vector3(0, _renderer.size.y/2, 0);
 
-            parallaxGameObject.transform.DOMoveY(-_renderer.size.y / 2, _renderer.size.y / _gameConfig.Value.DifficultData.SpeedBalloon)
-                .OnUpdate(SetCurrentHeight).SetEase(Ease.Linear);
+            parallaxGameObject.transform.DOMoveY(-_renderer.size.y / 2,
+                    _renderer.size.y / _gameConfig.Value.DifficultData.SpeedBalloon)
+                .OnUpdate(SetCurrentHeight)
+                .SetEase(Ease.Linear)
+                .SetAutoKill();
         }
 
         private void SetCurrentHeight()
