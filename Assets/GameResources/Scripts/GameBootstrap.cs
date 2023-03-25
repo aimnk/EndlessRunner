@@ -1,19 +1,19 @@
-using Game.Features.AssetProvider;
-using Game.Features.Configs;
-using Game.Features.Input;
-using Game.Features.Obstacles;
-using Game.Features.Parallax;
-using Game.Features.Player;
-using Leopotam.EcsLite;
-using Leopotam.EcsLite.Di;
-using UnityEngine;
-using Game.Features.Restart;
-using GameResources.Features.Obstacles;
-using LeoEcsPhysics;
-
 namespace Game.Base
 {
-
+   using Features.AssetProvider;
+   using Features.Configs;
+   using Features.Input;
+   using Features.Obstacles;
+   using Features.Parallax;
+   using Features.Player;
+   using Leopotam.EcsLite;
+   using Leopotam.EcsLite.Di;
+   using UnityEngine;
+   using Features.Restart;
+   using Features.UI;
+   using GameResources.Features.Obstacles;
+   using LeoEcsPhysics;
+   
    /// <summary>
    /// Инициализатор игры
    /// </summary>

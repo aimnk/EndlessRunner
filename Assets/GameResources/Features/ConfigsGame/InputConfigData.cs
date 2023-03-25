@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace Game.Features.Configs
 {
+    using UnityEngine;
+    
     /// <summary>
     /// Конфиг для настройки управления
     /// </summary>

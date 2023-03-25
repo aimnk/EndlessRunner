@@ -1,12 +1,12 @@
-using Game.Features.Extensions;
-using Game.Features.Player;
-using Game.Features.Restart;
-using LeoEcsPhysics;
-using Leopotam.EcsLite;
-using Leopotam.EcsLite.Di;
-
 namespace GameResources.Features.Obstacles
 {
+    using Game.Features.Extensions;
+    using Game.Features.Player;
+    using Game.Features.Restart;
+    using LeoEcsPhysics;
+    using Leopotam.EcsLite;
+    using Leopotam.EcsLite.Di;
+    
     /// <summary>
     /// Система столкновения с препятствиями
     /// </summary>

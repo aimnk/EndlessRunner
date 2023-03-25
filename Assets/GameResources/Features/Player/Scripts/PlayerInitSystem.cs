@@ -1,5 +1,3 @@
-using Game.Features.Configs;
-
 namespace Game.Features.Player
 {
     using AssetProvider;
@@ -9,6 +7,8 @@ namespace Game.Features.Player
     using Leopotam.EcsLite;
     using Leopotam.EcsLite.Di;
     using UnityEngine;
+    using Configs;
+
 
     /// <summary>
     /// Система спавна и инициализации игрока

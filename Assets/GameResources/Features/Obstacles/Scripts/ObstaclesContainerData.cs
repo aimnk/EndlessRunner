@@ -1,27 +1,30 @@
-using System;
-using System.Collections.Generic;
-using Game.Features.Configs;
-using UnityEngine;
-
-/// <summary>
-/// Контейнер доступных препятствий
-/// </summary>
-[CreateAssetMenu(fileName = nameof(ObstaclesContainerData), menuName = "Game/Data/" + nameof(ObstaclesContainerData))]
-public class ObstaclesContainerData : ScriptableObject
+namespace Game.Features.Obstacles
 {
-   [field: SerializeField] 
-   public List<HeightObstaclesData> HeightObstaclesDatas { get; private set; }
-}
+   using System;
+   using System.Collections.Generic;
+   using Configs;
+   using UnityEngine;
 
-/// <summary>
-/// Дата Препятствий в зависимости от высоты
-/// </summary>
-[Serializable]
-public class HeightObstaclesData
-{
-   public float MinHeight;
+   /// <summary>
+   /// Контейнер доступных препятствий
+   /// </summary>
+   [CreateAssetMenu(fileName = nameof(ObstaclesContainerData),
+      menuName = "Game/Data/" + nameof(ObstaclesContainerData))]
+   public class ObstaclesContainerData : ScriptableObject
+   {
+      [field: SerializeField] public List<HeightObstaclesData> HeightObstaclesDatas { get; private set; }
+   }
 
-   public float Maxheight;
+   /// <summary>
+   /// Дата Препятствий в зависимости от высоты
+   /// </summary>
+   [Serializable]
+   public class HeightObstaclesData
+   {
+      public float MinHeight;
 
-   public List<ObstaclesData> ObstaclesDatas;
+      public float Maxheight;
+
+      public List<ObstaclesData> ObstaclesDatas;
+   }
 }
