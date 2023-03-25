@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1cc97e92d76476093d4293531b0f33, type: 3}
+  m_Name: ParallaxData
+  m_EditorClassIdentifier: 
+  <PrefabParallax>k__BackingField: {fileID: 1788264958252738268, guid: 5f0a761dbb99646ccabbfd71ae729699, type: 3}
+  <MovementSpeed>k__BackingField: 0

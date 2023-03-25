@@ -21,6 +21,20 @@
       "dependencies": {},
       "hash": "007a5af4aaa1c4993523232f306a5f02e1de7c0f"
     },
+    "com.leopotam.ecslite.unity.ugui": {
+      "version": "https://github.com/Leopotam/ecslite-unity-ugui.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "18a643c67639838e3d74c06b83316e98d0ac17a0"
+    },
+    "com.supremestranger.leoecs-lite-physics": {
+      "version": "https://github.com/supremestranger/leoecs-lite-physics.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4e7a935370c9455ec5d9eb9bed2e8580c4735615"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.8",
       "depth": 1,

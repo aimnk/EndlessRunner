@@ -3,6 +3,8 @@
     "com.leopotam.ecslite": "https://github.com/Leopotam/ecslite.git",
     "com.leopotam.ecslite.di": "https://github.com/Leopotam/ecslite-di.git",
     "com.leopotam.ecslite.extendedsystems": "https://github.com/Leopotam/ecslite-extendedsystems.git",
+    "com.leopotam.ecslite.unity.ugui": "https://github.com/Leopotam/ecslite-unity-ugui.git",
+    "com.supremestranger.leoecs-lite-physics": "https://github.com/supremestranger/leoecs-lite-physics.git",
     "com.unity.collab-proxy": "1.17.6",
     "com.unity.feature.2d": "1.0.0",
     "com.unity.ide.rider": "3.0.15",

@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81eccc4cc04294919b0ae9c176195d0f, type: 3}
+  m_Name: ObstaclesContainerData
+  m_EditorClassIdentifier: 
+  <HeightObstaclesDatas>k__BackingField:
+  - MinHeight: 0
+    Maxheight: 80
+    ObstaclesDatas:
+    - {fileID: 11400000, guid: 1de780e06326a408185c68a51dfd0cc3, type: 2}
+    - {fileID: 11400000, guid: dc505d68c48a24a85b67b4974f5bc648, type: 2}
+    - {fileID: 11400000, guid: c627ce5bb6da4425d9ec9f3493e62663, type: 2}
+    - {fileID: 11400000, guid: 11dca84542fb941e3b2eb1a0f9a89c68, type: 2}
+    - {fileID: 11400000, guid: a2078e2e1c7ae44a283c7ce52ef09ef1, type: 2}
+    - {fileID: 11400000, guid: 2763f52baeed747d9860461d25ade0f1, type: 2}
+  - MinHeight: 80
+    Maxheight: 160
+    ObstaclesDatas:
+    - {fileID: 11400000, guid: 8c204bb7d047b42b498b18f1a70e3476, type: 2}
+    - {fileID: 11400000, guid: 027814bf4c7294c59b223092562b4143, type: 2}
+    - {fileID: 11400000, guid: 3ca8c84889c6644389f73d3e67f7affb, type: 2}
+    - {fileID: 11400000, guid: b88e0ae6b21864e34a2bde3828deaf42, type: 2}
+  - MinHeight: 160
+    Maxheight: 240
+    ObstaclesDatas:
+    - {fileID: 11400000, guid: e79e224608fd24c05a7504b83fa7196a, type: 2}
+    - {fileID: 11400000, guid: 9b07352a93de24790afa800a7e0aa30b, type: 2}
+    - {fileID: 11400000, guid: 7d8c6647a1ca448fcb1c261d0c7d076f, type: 2}
+  - MinHeight: 240
+    Maxheight: 320
+    ObstaclesDatas:
+    - {fileID: 11400000, guid: c12f2537353494092bb37835a6df2ec1, type: 2}
+    - {fileID: 11400000, guid: 9c585deebfbc64023a059b7a118a5aa4, type: 2}
+    - {fileID: 11400000, guid: 34eaca88563f540a1b8e29715ef219ed, type: 2}
+    - {fileID: 11400000, guid: d7ab572248430405da6d021cfcd51899, type: 2}
