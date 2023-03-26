@@ -1,11 +1,9 @@
-namespace GameResources.Features.Obstacles
+namespace Game.Features.Obstacles
 {
-    using Game.Features.Extensions;
-    using Game.Features.Player;
-    using Game.Features.Restart;
     using LeoEcsPhysics;
     using Leopotam.EcsLite;
     using Leopotam.EcsLite.Di;
+    using States;
     
     /// <summary>
     /// Система столкновения с препятствиями
@@ -16,28 +14,19 @@ namespace GameResources.Features.Obstacles
         
         private EcsFilterInject<Inc<OnTriggerEnter2DEvent>> _filterTrigger;
         
-        private EcsFilterInject<Inc<PlayerMarker>> _filterPlayer;
+        private EcsCustomInject<IStateMachine> _stateMachine;
         
         private bool _isTrigger = false;
+
+        private float _timeDelay;
         
         public void Run(IEcsSystems systems)
         {
-            if (_isTrigger)
-            {
-                return;
-            }
-            
             foreach (var entity in _filterTrigger.Value)
             {
-                _isTrigger = true;
-            }
-
-            if (_isTrigger)
-            {
-                foreach (var entity in _filterPlayer.Value)
-                {
-                    _world.Value.AddComponent<RestartEvent>(entity);
-                }
+                _stateMachine.Value.Enter(State.Death);
+                var triggerPool = _world.Value.GetPool<OnTriggerEnter2DEvent>();
+                triggerPool.Del(entity);
             }
         }
     }
