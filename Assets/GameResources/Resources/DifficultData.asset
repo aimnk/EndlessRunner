@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c22a8221757c424087f00d6056843b1, type: 3}
   m_Name: DifficultData
   m_EditorClassIdentifier: 
-  <SpeedBalloon>k__BackingField: 2.5
+  <SpeedBalloon>k__BackingField: 1
   <CountObstacleInScreen>k__BackingField: 5
   <SpawnObstacleDelay>k__BackingField: 2
   <SpeedObstacle>k__BackingField: 5

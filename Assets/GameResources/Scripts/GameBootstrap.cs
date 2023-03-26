@@ -9,10 +9,10 @@ namespace Game.Base
    using Leopotam.EcsLite;
    using Leopotam.EcsLite.Di;
    using UnityEngine;
-   using Features.Restart;
    using Features.UI;
-   using GameResources.Features.Obstacles;
    using LeoEcsPhysics;
+   using Features.States;
+   using Leopotam.EcsLite.Unity.Ugui;
    
    /// <summary>
    /// Инициализатор игры
@@ -21,6 +21,9 @@ namespace Game.Base
    {
       [SerializeField]
       private MainUI _mainUI;
+
+      [SerializeField] 
+      private EcsUguiEmitter _uguiEmitter;
       
       private EcsWorld _world;
 
@@ -29,14 +32,17 @@ namespace Game.Base
       private EcsSystems _physicsSystem;
 
       private IAssetProvider _assetProvider = new AssetResourcesProvider();
+
+      private IStateMachine _stateMachine = new SimpleStateMachine();
       
       private void Start()
       {
          _world = new EcsWorld();
-         _systems = new EcsSystems(_world);
-         _physicsSystem = new EcsSystems(_world);
+         _systems = new EcsSystems(_world, _stateMachine);
+         _physicsSystem = new EcsSystems(_world, _stateMachine);
          EcsPhysicsEvents.ecsWorld = _world;
          
+         _stateMachine.Enter(State.Start);
          InitBaseSystems();
          InitPhysicsSystems();
       }
@@ -44,6 +50,7 @@ namespace Game.Base
       private void InitBaseSystems()
       {
          _systems
+            .Add(new StartupSystem())
             .Add(new PlayerInitSystem())
             .Add(new ParallaxInitSystem())
             .Add(new InputSystem())
@@ -51,7 +58,8 @@ namespace Game.Base
             .Add(new ObstaclesSpawnSystem())
             .Add(new ObstacleMovement())
             .Add(new  RestartSystem())
-            .Inject(_assetProvider, new GameConfig(_assetProvider), _mainUI)
+            .Inject(_assetProvider, new GameConfig(_assetProvider), _mainUI, _stateMachine)
+            .InjectUgui(_uguiEmitter)
             .Init();
       }
 
@@ -59,11 +67,11 @@ namespace Game.Base
       {
          _physicsSystem
             .Add(new ObstaclesCollisionSystem())
-            .Inject()
+            .Inject(_stateMachine)
             .Init();
       }
 
-      private void Update()
+      private void Update() 
          => _systems?.Run();
 
       private void FixedUpdate()
@@ -73,6 +81,7 @@ namespace Game.Base
       {
          if (_systems != null)
          {
+            _systems.GetWorld("ugui-events")?.Destroy ();
             _systems.Destroy();
             _systems = null;
          }

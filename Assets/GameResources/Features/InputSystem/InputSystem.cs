@@ -4,6 +4,8 @@ namespace Game.Features.Input
     using Leopotam.EcsLite.Di;
     using UnityEngine;
     using Movement;
+    using States;
+
 
     /// <summary>
     /// Система управленя свайпами
@@ -15,6 +17,8 @@ namespace Game.Features.Input
         private readonly EcsWorldInject _world = default;
 
         private EcsFilterInject<Inc<MovementComponent, InputComponent>> _filter;
+        
+        private EcsCustomInject<IStateMachine> _stateMachine;
 
         private Vector2 _startTouchPosition;
 
@@ -29,6 +33,11 @@ namespace Game.Features.Input
 
         public void Run(IEcsSystems systems)
         {
+            if (_stateMachine.Value.CurrentState() != State.Game)
+            {
+                return;
+            }
+            
             foreach (var entity in _filter.Value)
             {
                 ref var inputComponent = ref _inputComponentPool.Get(entity);

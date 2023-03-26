@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Game.Features.Obstacles
 {
     using System.Collections.Generic;
@@ -10,20 +12,20 @@ namespace Game.Features.Obstacles
     using Leopotam.EcsLite.Di;
     using UnityEngine;
     using UnityEngine.Pool;
+    using States;
 
     /// <summary>
     /// Спавнер препятствий
     /// </summary>
     public class ObstaclesSpawnSystem : IEcsInitSystem, IEcsRunSystem
     {
-        private const string OBSTACLES_CONTAINER_DATA_PATH = "ObstaclesContainerData";
-        private const string OBSTACLES_SPAWN_DATA = "ObstaclesSpawnData";
         private const float MOVE_STEP = 8;
         private const int COUNT_LINES = 3;
 
         private readonly EcsWorldInject _world = default;
         private readonly EcsCustomInject<IAssetProvider> _assetProvider;
         private readonly EcsCustomInject<GameConfig> _gameConfig;
+        private EcsCustomInject<IStateMachine> _stateMachine;
 
         private EcsFilterInject<Inc<LevelComponent>> _filterLevel;
         private EcsFilterInject<Inc<ObstacleComponent>> _filterObstacle;
@@ -36,7 +38,7 @@ namespace Game.Features.Obstacles
         private EcsPool<MovementComponent> _movementPool;
 
         private ObjectPool<EntityGameObjectData> _objectPool;
-        private Dictionary<int, EntityGameObjectData> _entityPoolDatas = new Dictionary<int, EntityGameObjectData>();
+        private List<EntityGameObjectData> _entityPoolDatas = new List<EntityGameObjectData>();
 
         private float _timeDelay;
 
@@ -44,9 +46,9 @@ namespace Game.Features.Obstacles
 
         public void Init(IEcsSystems systems)
         {
-            _spawnObjectData = _assetProvider.Value.LoadAsset<SpawnObjectData>(OBSTACLES_SPAWN_DATA);
+            _spawnObjectData = _assetProvider.Value.LoadAsset<SpawnObjectData>(AssetsDataPath.OBSTACLES_SPAWN_DATA);
             _obstaclesContainerData =
-                _assetProvider.Value.LoadAsset<ObstaclesContainerData>(OBSTACLES_CONTAINER_DATA_PATH);
+                _assetProvider.Value.LoadAsset<ObstaclesContainerData>(AssetsDataPath.OBSTACLES_CONTAINER_DATA_PATH);
             _levelPool = _world.Value.GetPool<LevelComponent>();
             _obstaclePool = _world.Value.GetPool<ObstacleComponent>();
             _movementPool = _world.Value.GetPool<MovementComponent>();
@@ -77,7 +79,7 @@ namespace Game.Features.Obstacles
 
         private void DestroyEntityData(EntityGameObjectData data)
         {
-            _entityPoolDatas.Remove(data.Entity);
+            _entityPoolDatas.Remove(data);
             _world.Value.DelEntity(data.Entity);
             Object.Destroy(data.GameObject);
         }
@@ -88,18 +90,40 @@ namespace Game.Features.Obstacles
             var gameObject = Object.Instantiate(_spawnObjectData.Prefab, Vector3.zero, Quaternion.identity);
             _world.Value.AddComponent<MovementComponent>(entity).Transform = gameObject.transform;
             _world.Value.AddComponent<ObstacleComponent>(entity);
+            
+            var obstacle = new EntityGameObjectData(entity, gameObject);
+            _entityPoolDatas.Add(obstacle);
+            
             return new EntityGameObjectData(entity, gameObject);
         }
 
         public void Run(IEcsSystems systems)
         {
+            if (_stateMachine.Value.CurrentState() != State.Game)
+            {
+                if (_objectPool.CountActive == 0)
+                {
+                    return;
+                }
+                
+                foreach (var entityPoolData in _entityPoolDatas)
+                {
+                    ref var obstacleComponent = ref _obstaclePool.Get(entityPoolData.Entity);
+                    if (obstacleComponent.CanRelease)
+                    {
+                        _objectPool?.Release(entityPoolData);
+                    }
+                }
+                return;
+            }
+            
             foreach (var entity in _filterObstacle.Value)
             {
                 ref ObstacleComponent obstacleComponent = ref _obstaclePool.Get(entity);
 
                 if (obstacleComponent.CanRelease)
                 {
-                    _objectPool.Release(_entityPoolDatas.GetValueOrDefault(entity));
+                    _objectPool.Release(_entityPoolDatas.FirstOrDefault(x => x.Entity == entity));
                 }
                 else if (_objectPool.CountActive < _gameConfig.Value.DifficultData.CountObstacleInScreen)
                 {
@@ -147,8 +171,6 @@ namespace Game.Features.Obstacles
             obstacle.GameObject.transform.localRotation = Quaternion.Euler(obstaclesData.Rotation);
             obstacle.GameObject.transform.localScale = obstaclesData.Scale;
             obstacle.GameObject.GetComponent<SpriteRenderer>().sprite = obstaclesData.SpriteObstacle;
-
-            _entityPoolDatas.TryAdd(obstacle.Entity, obstacle);
         }
 
         private class EntityGameObjectData

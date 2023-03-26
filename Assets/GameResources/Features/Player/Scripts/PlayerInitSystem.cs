@@ -15,17 +15,15 @@ namespace Game.Features.Player
     /// </summary>
     public class PlayerInitSystem : IEcsInitSystem
     {
-        private const string PLAYER_DATA_PATH = "PlayerData";
-
         private readonly EcsWorldInject _world = default;
 
-        private EcsCustomInject<IAssetProvider> _assetProvider;
+        private readonly EcsCustomInject<IAssetProvider> _assetProvider;
 
         private int _playerEntity;
 
         public void Init(IEcsSystems systems)
         {
-            SpawnObjectData spawnObjectData = _assetProvider.Value.LoadAsset<SpawnObjectData>(PLAYER_DATA_PATH);
+            SpawnObjectData spawnObjectData = _assetProvider.Value.LoadAsset<SpawnObjectData>(AssetsDataPath.PLAYER_DATA_PATH);
 
             var playerGameObject =
                 GameObject.Instantiate(spawnObjectData.Prefab, spawnObjectData.StartPoint, Quaternion.identity);
