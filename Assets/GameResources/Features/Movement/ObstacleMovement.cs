@@ -45,7 +45,7 @@ namespace Game.Features.Obstacles
                 {
                     ref var obstacleComponent = ref _obstaclePool.Get(sequence.Key);
 
-                    if (!sequence.Value.IsPlaying())
+                    if (!sequence.Value.IsActive())
                     {
                         return;
                     }
@@ -92,6 +92,7 @@ namespace Game.Features.Obstacles
         {
             ref var obstacleComponent = ref _obstaclePool.Get(entity);
             obstacleComponent.CanRelease = true;
+            _dictionary.Remove(entity);
         }
 
         public void Destroy(IEcsSystems systems)

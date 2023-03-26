@@ -57,6 +57,7 @@ namespace Game.Features.Player
                 {
                     ref Transform transform = ref _movementPool.Get(entity).Transform;
                     transform.position = _spawnObjectData.StartPoint;
+                    transform.rotation = quaternion.identity;
                 }
                 
                 _sequence.Kill();
@@ -67,8 +68,6 @@ namespace Game.Features.Player
             {
                 ref Transform transform = ref _movementPool.Get(entity).Transform;
                 ref InputComponent inputComponent = ref _inputComponentPool.Get(entity);
-
-                transform.rotation = quaternion.identity;
                 
                 if (inputComponent.MoveRight && !_isMovement)
                 {
